@@ -4,12 +4,16 @@ PhyK-TAS is an experimental decision-support pipeline for assessing transferabil
 
 This repository contains the experiment code and derived result artifacts. It intentionally does not contain the LaTeX manuscript.
 
+For reviewer-facing reproduction details, see `REPRODUCIBILITY.md`. For a direct mapping from paper-facing claims and figures to scripts and files, see `TRACEABILITY.md`.
+
 ## Repository Contents
 
 - `scripts/`: experiment, aggregation, inference, conformal calibration, and figure-generation scripts.
 - `results/`: derived descriptors, shift metrics, transfer-degradation summaries, decision-layer outputs, bootstrap/significance analyses, model-fusion analyses, monotonicity analyses, and conformal decision summaries.
 - `figures/`: generated figures used to inspect and summarize the experiment.
 - `docs/`: local protocol notes, benchmark design notes, and audit summaries.
+- `REPRODUCIBILITY.md`: quick audit path, environment setup, and rebuild scope.
+- `TRACEABILITY.md`: mapping from paper-facing results to scripts and artifacts.
 
 Large raw station archives, generated `.npz` forecasting tensors, console logs, Python caches, and manuscript folders are excluded from this repository. Several large prediction-level CSV files are also excluded because they are close to or above GitHub's single-file size limit; the aggregate tables needed to inspect the reported results are included in `results/`.
 
@@ -36,6 +40,16 @@ The principal scripts for rebuilding the final analysis tables are:
 - `scripts/build_v2_conformal.py`
 - `scripts/build_publication_figures.py`
 
+## Quick Validation
+
+After cloning the repository, run:
+
+```powershell
+python scripts/validate_release_artifacts.py
+```
+
+The validator checks that core outputs are present, that manuscript folders are absent, and that no included file is near GitHub's 100 MB single-file limit.
+
 ## Environment
 
 The scripts were developed with Python 3.13 on Windows. Core dependencies are listed in `requirements.txt`. GPU acceleration is optional for the neural forecasting scripts, but the final aggregation and analysis scripts run on CPU once their input tables exist.
@@ -43,6 +57,12 @@ The scripts were developed with Python 3.13 on Windows. Core dependencies are li
 ## Data Notes
 
 The benchmark is derived from public daily precipitation archives, harmonized outside this repository. The included `results/` tables are derived artifacts for the experiment. Rebuilding the complete forecasting pipeline from raw data requires the external station archives and the local harmonization pipeline.
+
+The repository is therefore a reproducibility package for the analysis and derived results, not a mirror of the raw meteorological archives.
+
+## Citation And License
+
+Code is released under the MIT License. Citation metadata are provided in `CITATION.cff`.
 
 ## Manuscript Exclusion
 
