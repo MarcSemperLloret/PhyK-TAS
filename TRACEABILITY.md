@@ -31,8 +31,10 @@ This file maps paper-facing claims, tables, and figures to repository artifacts.
 | Inference-model fusion and LTRO stress test | `scripts/build_v2_meta_models.py` | `results/v2_meta_models_all_viable_min100_full.csv`, `results/v2_meta_models_all_viable_min100_full_report.md` |
 | Monotone shift constraints | `scripts/build_v2_monotonic.py` | `results/v2_monotonic_all_viable_min100_full.csv`, `results/v2_monotonic_all_viable_min100_full_report.md` |
 | Split-conformal decision calibration | `scripts/build_v2_conformal.py` | `results/v2_conformal_all_viable_min100_full.csv`, `results/v2_conformal_all_viable_min100_full_report.md` |
+| Alpha-dependent conformal utility and unsafe deploy rates | `scripts/build_v2_conformal_utility.py` | `results/v2_conformal_utility_all_viable_min100_full.csv`, `results/v2_conformal_utility_all_viable_min100_full_report.md` |
 | Physical descriptor group ablation | `scripts/run_physical_group_ablation.py` | `results/physical_group_ablation_results_all.csv`, `results/physical_group_ablation_summary.csv`, `figures/fig_physical_group_ablation.png` |
 | Negative controls for physical descriptors | `scripts/build_v2_negative_controls.py` | `results/v2_negative_controls_all_viable_min100_full.csv`, `results/v2_negative_controls_all_viable_min100_full_report.md` |
+| Negative-control gain over shift-only baseline | `scripts/build_v2_negative_control_delta.py` | `results/v2_negative_control_delta_all_viable_min100_full.csv`, `results/v2_negative_control_delta_all_viable_min100_full_report.md` |
 | Compact multi-level fusion ablation | `scripts/build_v2_fusion_ablation_summary.py` | `results/v2_fusion_ablation_summary_all_viable_min100_full.csv`, `results/v2_fusion_ablation_summary_all_viable_min100_full_report.md` |
 | Regional-set sensitivity | `scripts/build_v2_region_sensitivity.py` | `results/v2_region_sensitivity_all_viable_min100_full.csv`, `results/v2_region_sensitivity_all_viable_min100_full_report.md` |
 

@@ -43,7 +43,9 @@ python scripts/build_v2_meta_models.py
 python scripts/build_v2_monotonic.py
 python scripts/build_v2_conformal.py
 python scripts/build_v2_negative_controls.py
+python scripts/build_v2_negative_control_delta.py
 python scripts/build_v2_decision_costs.py
+python scripts/build_v2_conformal_utility.py
 python scripts/build_v2_fusion_ablation_summary.py
 python scripts/build_v2_region_sensitivity.py
 python scripts/build_all_viable_final_artifacts.py
@@ -52,7 +54,9 @@ python scripts/build_publication_figures.py
 
 Some scripts were originally written to run from the `Paper1` project root and may expect outputs in the current directory. If running them from this repository, either run from the repository root and keep the included `results/` files in place, or copy the needed inputs to the script's expected working directory. `TRACEABILITY.md` lists the specific input and output files for each paper-facing result.
 
-The negative-control script defaults to the primary group-by-cell setting for the spatial and graph-based forecasters and uses aggregated source-target-cell-seed rows to keep the permutation test tractable. Its behavior can be changed with `PHYKTAS_NEG_REPEATS`, `PHYKTAS_NEG_TREES`, `PHYKTAS_NEG_CV`, and `PHYKTAS_NEG_MODELS`.
+The negative-control scripts default to the primary group-by-cell setting for the spatial and graph-based forecasters and use aggregated source-target-cell-seed rows to keep the permutation test tractable. Their behavior can be changed with `PHYKTAS_NEG_REPEATS`, `PHYKTAS_NEG_TREES`, `PHYKTAS_NEG_CV`, and `PHYKTAS_NEG_MODELS`. The delta variant reports whether aligned physical descriptors add signal beyond the shift-only baseline after permutation.
+
+The conformal utility script repeats the split-conformal decision evaluation across several alpha levels and reports empirical coverage, unsafe-deploy rates, decision rates, and an illustrative asymmetric decision cost. The cost matrix is intentionally exposed in the script/report so reviewers can treat it as a sensitivity analysis rather than a universal operational utility.
 
 ## Regenerating Forecasting Outputs
 
@@ -89,4 +93,4 @@ The following classes of files are intentionally excluded:
 - Prediction-level CSV files near or above GitHub's single-file size limit.
 - All manuscript folders.
 
-The included aggregate tables are sufficient to inspect the reported feature-set comparisons, hierarchical bootstrap results, model-fusion results, monotonicity analyses, conformal decision summaries, source-accuracy diagnostics, and threshold sensitivity analyses.
+The included aggregate tables are sufficient to inspect the reported feature-set comparisons, hierarchical bootstrap results, model-fusion results, monotonicity analyses, conformal decision summaries, conformal utility sensitivity, negative-control checks, source-accuracy diagnostics, and threshold sensitivity analyses.
