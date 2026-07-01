@@ -32,6 +32,9 @@ This file maps paper-facing claims, tables, and figures to repository artifacts.
 | Monotone shift constraints | `scripts/build_v2_monotonic.py` | `results/v2_monotonic_all_viable_min100_full.csv`, `results/v2_monotonic_all_viable_min100_full_report.md` |
 | Split-conformal decision calibration | `scripts/build_v2_conformal.py` | `results/v2_conformal_all_viable_min100_full.csv`, `results/v2_conformal_all_viable_min100_full_report.md` |
 | Physical descriptor group ablation | `scripts/run_physical_group_ablation.py` | `results/physical_group_ablation_results_all.csv`, `results/physical_group_ablation_summary.csv`, `figures/fig_physical_group_ablation.png` |
+| Negative controls for physical descriptors | `scripts/build_v2_negative_controls.py` | `results/v2_negative_controls_all_viable_min100_full.csv`, `results/v2_negative_controls_all_viable_min100_full_report.md` |
+| Compact multi-level fusion ablation | `scripts/build_v2_fusion_ablation_summary.py` | `results/v2_fusion_ablation_summary_all_viable_min100_full.csv`, `results/v2_fusion_ablation_summary_all_viable_min100_full_report.md` |
+| Regional-set sensitivity | `scripts/build_v2_region_sensitivity.py` | `results/v2_region_sensitivity_all_viable_min100_full.csv`, `results/v2_region_sensitivity_all_viable_min100_full_report.md` |
 
 ## Decision And Robustness Checks
 
@@ -39,6 +42,7 @@ This file maps paper-facing claims, tables, and figures to repository artifacts.
 |---|---|---|
 | Deploy/adapt/retrain decision counts | `scripts/build_large_seed_decision_layer.py` | `results/large_seed_transfer_decisions.csv`, `results/large_seed_transfer_decision_report.md`, `figures/fig_all_viable_decision_counts.png` |
 | Decision validation against observed classes | `scripts/build_review_response_analyses.py` | `results/all_viable_min100_full_decision_validation_pairs.csv`, `results/all_viable_min100_full_decision_validation_summary.csv` |
+| Cost-sensitive decision comparison against simple policies | `scripts/build_v2_decision_costs.py` | `results/v2_decision_costs_all_viable_min100_full.csv`, `results/v2_decision_costs_all_viable_min100_full_report.md` |
 | Threshold sensitivity | `scripts/run_decision_threshold_sensitivity.py` | `results/all_viable_min100_full_threshold_sensitivity.csv`, `results/all_viable_min100_full_threshold_sensitivity_details.csv`, `figures/fig_all_viable_threshold_sensitivity.png` |
 | Source accuracy versus transfer degradation | `scripts/build_review_response_analyses.py` | `results/all_viable_min100_full_source_accuracy_vs_transfer.csv`, `results/all_viable_min100_full_source_accuracy_vs_transfer_summary.csv`, `figures/fig_all_viable_source_accuracy_vs_transfer.png` |
 | Relative-degradation scale diagnostic | `scripts/build_review_response_analyses.py` | `results/all_viable_min100_full_relative_degradation_kbs_results.csv`, `results/all_viable_min100_full_relative_degradation_summary.csv` |

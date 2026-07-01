@@ -21,6 +21,10 @@ REQUIRED_FILES = [
     "results/v2_meta_models_all_viable_min100_full.csv",
     "results/v2_monotonic_all_viable_min100_full.csv",
     "results/v2_conformal_all_viable_min100_full.csv",
+    "results/v2_negative_controls_all_viable_min100_full.csv",
+    "results/v2_decision_costs_all_viable_min100_full.csv",
+    "results/v2_fusion_ablation_summary_all_viable_min100_full.csv",
+    "results/v2_region_sensitivity_all_viable_min100_full.csv",
     "figures/fig_all_viable_kbs_r2_by_model.png",
     "figures/fig_all_viable_degradation_heatmaps.png",
     "figures/fig_all_viable_threshold_sensitivity.png",
@@ -29,6 +33,10 @@ REQUIRED_FILES = [
     "scripts/build_v2_meta_models.py",
     "scripts/build_v2_monotonic.py",
     "scripts/build_v2_conformal.py",
+    "scripts/build_v2_negative_controls.py",
+    "scripts/build_v2_decision_costs.py",
+    "scripts/build_v2_fusion_ablation_summary.py",
+    "scripts/build_v2_region_sensitivity.py",
 ]
 
 FORBIDDEN_DIRS = [

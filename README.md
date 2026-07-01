@@ -29,6 +29,9 @@ The current Information Fusion version is centered on the all-viable 11-region b
 - `results/v2_meta_models_all_viable_min100_full_report.md`
 - `results/v2_monotonic_all_viable_min100_full_report.md`
 - `results/v2_conformal_all_viable_min100_full_report.md`
+- `results/v2_negative_controls_all_viable_min100_full_report.md`
+- `results/v2_decision_costs_all_viable_min100_full_report.md`
+- `results/v2_region_sensitivity_all_viable_min100_full_report.md`
 
 The principal scripts for rebuilding the final analysis tables are:
 
@@ -38,6 +41,9 @@ The principal scripts for rebuilding the final analysis tables are:
 - `scripts/build_v2_meta_models.py`
 - `scripts/build_v2_monotonic.py`
 - `scripts/build_v2_conformal.py`
+- `scripts/build_v2_negative_controls.py`
+- `scripts/build_v2_decision_costs.py`
+- `scripts/build_v2_region_sensitivity.py`
 - `scripts/build_publication_figures.py`
 
 ## Quick Validation
