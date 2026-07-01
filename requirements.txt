@@ -1,0 +1,9 @@
+duckdb
+geopandas
+matplotlib
+numpy
+pandas
+regionmask
+scikit-learn
+scipy
+torch

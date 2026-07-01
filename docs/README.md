@@ -1,0 +1,107 @@
+# Paper1
+
+Trabajo sobre robustez de modelos espaciotemporales de precipitacion bajo cambio de regimen climatico.
+
+Estado actual all-viable:
+
+- `manuscript_latex/main.pdf`: borrador LaTeX compilado para Knowledge-Based Systems.
+- `all_viable_min100_full_aggregate_report.md`: resumen multi-semilla del experimento all-viable.
+- `all_viable_min100_full_sanity_report.md`: auditoria final de regiones, descriptores, resultados KBS, correlacion source-accuracy/transfer y decisiones.
+- `all_viable_min100_full_threshold_sensitivity_report.md`: sensibilidad de umbrales deploy/adapt/retrain para el experimento all-viable completo.
+- `figures/fig_all_viable_*.png`: figuras finales copiadas tambien a `manuscript_latex/figures/`.
+
+Documento principal actual:
+
+- `protocolo_benchmark_regimenes_v1.md`: protocolo metodologico inicial con definicion de regiones, deduplicacion, filtros de inclusion, validacion temporal y descriptores fisicos preregistrados.
+- `protocolo_preregistro_v2.md`: version consolidada candidata para preregistro publico tras las fases de viabilidad.
+- `kbs_positioning_v1.md`: posicionamiento del articulo para Knowledge-Based Systems.
+- `manuscript_outline_kbs_v1.md`: estructura propuesta del manuscrito orientado a KBS.
+- `cobertura_bloques_temporales_v1.md`: comprobacion preliminar de cobertura por fuente, interseccion temporal y piloto de deduplicacion mediterranea aproximada.
+- `decision_nucleo_operativo_v1.md`: decision actual sobre nucleo principal, validaciones y regla 80/95 antes de continuar.
+- `stations_ar6.csv`: asignacion oficial de estaciones a regiones IPCC AR6 land mediante `regionmask`.
+- `viability_pre_dedup.csv`: conteos por region AR6, fuente, umbral y periodo antes de deduplicar.
+- `viability_post_dedup.csv`: conteos post-deduplicacion por region AR6, umbral, periodo y alcance.
+- `region_decisions.md`: decision provisional por region para el diseno operativo.
+- `dedup_audit_report.md`: auditoria de muestra de duplicados y correlaciones.
+- `power_analysis.md`: analisis preliminar de potencia con n post-dedup por estaciones y celdas 5 x 5.
+- `pilot_light_power.md`: piloto ligero de degradacion con climatologia regional diaria.
+- `pilot_light_degradation.csv`: degradacion por estacion del piloto ligero.
+- `physical_descriptors_station.csv`: capa de conocimiento fisico por estacion.
+- `physical_descriptors_cell5.csv`: capa de conocimiento fisico agregada por celda 5 x 5.
+- `physical_descriptors_region.csv`: capa de conocimiento fisico agregada por region AR6.
+- `physical_descriptors_report.md`: resumen de descriptores fisicos.
+- `distribution_shift_baselines.csv`: baselines genericos de distribution shift por par de regiones.
+- `distribution_shift_baselines_report.md`: resumen de baselines genericos.
+- `knowledge_vs_shift_pilot_results.csv`: comparacion piloto entre conocimiento fisico y shift generico.
+- `knowledge_vs_shift_pilot_report.md`: reporte de la comparacion piloto.
+- `knowledge_vs_shift_full_matrix_results.csv`: comparacion knowledge-vs-shift sobre matriz completa out-of-region.
+- `knowledge_vs_shift_full_matrix_predictions.csv`: predicciones out-of-fold de la comparacion full-matrix.
+- `knowledge_vs_shift_full_matrix_report.md`: reporte de la comparacion full-matrix.
+- `light_degradation_station.csv`: matriz ligera de degradacion por estacion, origen y destino.
+- `light_degradation_pair_summary.csv`: resumen origen-destino de degradacion ligera.
+- `light_degradation_matrix_report.md`: reporte de matriz ligera de degradacion.
+- `transfer_risk_classifier_results.csv`: metricas de clasificadores de riesgo deploy/adapt/retrain.
+- `transfer_risk_predictions.csv`: probabilidades out-of-fold de riesgo por transferencia.
+- `transfer_risk_decisions.csv`: recomendaciones deploy/adapt/retrain por estacion y par origen-destino.
+- `transfer_risk_decision_layer_report.md`: reporte de la capa de decision.
+- `forecast_dataset_operational_sample.npz`: dataset muestreado para experimentos de forecasting.
+- `forecast_dataset_large.npz`: dataset grande para experimentos caros de ST-GNN.
+- `forecast_dataset_large_metadata.csv`: metadatos del dataset grande.
+- `forecast_dataset_large_report.md`: reporte del dataset grande.
+- `forecast_baseline_station_metrics.csv`: metricas por estacion de climatologia regional transferida.
+- `forecast_baseline_pair_summary.csv`: resumen origen-destino de climatologia regional transferida.
+- `forecast_persistence_station_metrics.csv`: baseline de persistencia por estacion sin transferencia regional.
+- `forecast_baseline_report.md`: reporte de baselines meteorologicos simples.
+- `forecast_spatial_baseline_station_metrics.csv`: metricas por estacion del baseline espacial kNN-ridge.
+- `forecast_spatial_baseline_pair_summary.csv`: resumen origen-destino del baseline espacial kNN-ridge.
+- `forecast_spatial_baseline_report.md`: reporte del baseline espacial simple.
+- `forecast_stgnn_station_metrics.csv`: metricas por estacion del ST-GNN `stgcn_diffusion`.
+- `forecast_stgnn_pair_summary.csv`: resumen origen-destino del ST-GNN.
+- `forecast_stgnn_report.md`: reporte del experimento ST-GNN.
+- `forecast_graphwavenet_station_metrics.csv`: metricas por estacion de Graph WaveNet transferible.
+- `forecast_graphwavenet_pair_summary.csv`: resumen origen-destino de Graph WaveNet transferible.
+- `forecast_graphwavenet_report.md`: reporte del experimento Graph WaveNet transferible.
+- `forecast_graphwavenet_large_station_metrics.csv`: metricas del experimento caro Graph WaveNet.
+- `forecast_graphwavenet_large_pair_summary.csv`: resumen origen-destino del experimento caro Graph WaveNet.
+- `forecast_graphwavenet_large_report.md`: reporte del experimento caro Graph WaveNet.
+- `forecast_stgnn_large_station_metrics.csv`: metricas del experimento caro STGCN diffusion.
+- `forecast_stgnn_large_pair_summary.csv`: resumen origen-destino del experimento caro STGCN diffusion.
+- `forecast_stgnn_large_report.md`: reporte del experimento caro STGCN diffusion.
+- `forecast_patchtst_station_metrics.csv`: metricas por estacion del experimento linear/PatchTST inicial.
+- `forecast_patchtst_pair_summary.csv`: resumen por par origen-destino del experimento linear/PatchTST inicial.
+- `forecast_patchtst_report.md`: reporte del primer experimento de forecasting.
+- `kbs_forecast_model_comparison_results.csv`: comparacion KBS sobre degradacion de climatologia regional, spatial kNN-ridge, linear, PatchTST, ST-GNN y Graph WaveNet.
+- `kbs_forecast_model_comparison_predictions.csv`: predicciones de la comparacion KBS sobre modelos temporales.
+- `kbs_forecast_model_comparison_report.md`: reporte de la comparacion KBS sobre modelos temporales.
+- `kbs_forecast_model_comparison_large_results.csv`: comparacion KBS sobre los ST-GNN caros.
+- `kbs_forecast_model_comparison_large_predictions.csv`: predicciones KBS sobre los ST-GNN caros.
+- `kbs_forecast_model_comparison_large_report.md`: reporte KBS sobre los ST-GNN caros.
+- `large_seed_pair_summary_all.csv`: resultados ST-GNN large concatenados para tres semillas.
+- `large_seed_pair_uncertainty.csv`: incertidumbre por par origen-destino y modelo.
+- `large_seed_kbs_results_all.csv`: resultados KBS large concatenados para tres semillas.
+- `large_seed_kbs_uncertainty.csv`: incertidumbre KBS por feature set, CV y modelo.
+- `large_seed_uncertainty_report.md`: reporte de robustez multi-semilla.
+- `large_seed_transfer_decisions.csv`: decisiones deploy/adapt/retrain con incertidumbre.
+- `large_seed_transfer_decision_report.md`: reporte de decisiones conservadoras.
+- `final_model_kbs_summary.csv`: tabla compacta final por modelo ST-GNN.
+- `final_pair_risk_summary.csv`: tabla compacta final por par origen-destino.
+- `final_experimental_summary_report.md`: resumen experimental final para manuscrito.
+- `physical_group_ablation_results_all.csv`: resultados completos de ablacion por grupos fisicos.
+- `physical_group_ablation_summary.csv`: resumen multi-semilla de la ablacion fisica.
+- `physical_group_ablation_report.md`: reporte de ablacion fisica.
+- `decision_threshold_sensitivity.csv`: sensibilidad agregada de umbrales deploy/adapt/retrain.
+- `decision_threshold_sensitivity_details.csv`: detalle por par de la sensibilidad de umbrales.
+- `decision_threshold_sensitivity_report.md`: reporte de sensibilidad de decisiones.
+- `all_viable_min100_full_threshold_sensitivity.csv`: sensibilidad all-viable de umbrales deploy/adapt/retrain.
+- `all_viable_min100_full_threshold_sensitivity_details.csv`: detalle por par de la sensibilidad all-viable.
+- `all_viable_min100_full_threshold_sensitivity_report.md`: reporte de sensibilidad all-viable de decisiones.
+- `cold_start_physical_descriptors_by_window.csv`: descriptores fisicos recalculados para ventanas cold-start 8y/5y/3y/1y.
+- `cold_start_station_results_all.csv`: resultados por semilla del experimento cold-start target-station.
+- `cold_start_station_summary.csv`: resumen multi-semilla del experimento cold-start target-station.
+- `cold_start_station_decision_results_all.csv`: metricas de decision por semilla del experimento cold-start.
+- `cold_start_station_decision_summary.csv`: resumen multi-semilla de decisiones cold-start.
+- `cold_start_station_predictions.csv`: predicciones out-of-fold del experimento cold-start.
+- `cold_start_station_report.md`: reporte del experimento cold-start target-station.
+- `figures/`: figuras de degradacion, incertidumbre, comparacion KBS y decisiones.
+- `phase_status_v1.md`: estado de fases completadas y pendientes antes del preregistro.
+- `preregistration_package/`: paquete local listo para revision y subida a OSF o equivalente.

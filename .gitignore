@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Logs and generated runtime output
+*.log
+*.tmp
+*.bak
+
+# Large local generated arrays and raw data
+*.npz
+Data/
+data/raw/
+raw/
+sources/
+
+# Manuscripts are intentionally not part of this repository
+manuscript_latex/
+manuscript_latex_eswa/
+manuscript_latex_infofusion/
+*.aux
+*.bbl
+*.blg
+*.out
+*.spl
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,12 @@
+ar6_region,coverage_threshold,n_stations_threshold_file,n_cell5_threshold_file,n_stations,n_cell5,lat_mean,lon_mean,top_sources
+WCE,95,4493,20,4493,20,50.05143261500606,11.136208872468284,"eur_ecad_01:3011, deu_dwd_cdc_01:1145, che_meteoswiss_01:333, global_ghcnd_01:4"
+NEU,95,2355,33,2355,33,58.35953266808209,12.168331464968153,"eur_ecad_01:2235, deu_dwd_cdc_01:115, global_ghcnd_01:5"
+WNA,95,975,17,975,17,42.10086220518519,-113.85116879082621,"global_ghcnd_01:957, can_eccc_climate_stations_01:17, usa_nerrs_totprcp_01:1"
+ENA,95,522,21,522,21,38.989633644976585,-80.55330298080034,"global_ghcnd_01:479, can_eccc_climate_stations_01:36, usa_nerrs_totprcp_01:7"
+CNA,95,438,14,438,14,38.56150088026383,-97.17985557267883,"global_ghcnd_01:432, can_eccc_climate_stations_01:6"
+SAU,95,351,13,351,13,-36.5433452991453,137.49388205128204,global_ghcnd_01:351
+MED,95,328,19,328,19,40.11911602303523,8.274132215447155,"eur_ecad_01:223, esp_aemet_daily_hist_01:101, global_ghcnd_01:4"
+EAU,95,241,6,241,6,-30.57022946058091,150.74381784232364,global_ghcnd_01:241
+NWN,80,183,36,183,36,58.24171356102004,-132.5595946372192,"global_ghcnd_01:107, can_eccc_climate_stations_01:76"
+NCA,80,144,7,144,7,31.74360277777778,-108.05970208333333,"global_ghcnd_01:143, usa_nerrs_totprcp_01:1"
+EAS,80,110,16,110,16,24.999796546363637,117.89261180727273,"hkg_geo_raingauge_01:83, global_ghcnd_01:27"
