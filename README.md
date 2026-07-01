@@ -64,6 +64,8 @@ The repository is therefore a reproducibility package for the analysis and deriv
 
 Code is released under the MIT License. Citation metadata are provided in `CITATION.cff`.
 
+Derived tables, documentation, and figures are provided for scholarly reuse with attribution. Raw station archives remain subject to the licenses and access terms of their original public providers and are not redistributed here.
+
 ## Manuscript Exclusion
 
 The manuscript folders are deliberately not included:

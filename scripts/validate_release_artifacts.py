@@ -10,6 +10,7 @@ REQUIRED_FILES = [
     "REPRODUCIBILITY.md",
     "TRACEABILITY.md",
     "LICENSE",
+    "DATA_LICENSE.md",
     "CITATION.cff",
     "requirements.txt",
     "results/all_viable_min100_full_aggregate_report.md",
