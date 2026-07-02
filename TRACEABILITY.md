@@ -39,7 +39,9 @@ This file maps paper-facing claims, tables, and figures to repository artifacts.
 | Compact multi-level fusion ablation | `scripts/build_v2_fusion_ablation_summary.py` | `results/v2_fusion_ablation_summary_all_viable_min100_full.csv`, `results/v2_fusion_ablation_summary_all_viable_min100_full_report.md` |
 | Full v3 inference-model fusion table | `scripts/build_v3_fusion.py` | `results/v3_fusion_scores_all_viable_min100_full.csv`, `results/v3_fusion_all_viable_min100_full_report.md` |
 | Reliability-aware source complementarity and conflict | `scripts/build_v3_fusion.py` | `results/v3_complementarity_all_viable_min100_full.csv`, `results/v3_conflict_all_viable_min100_full.csv` |
+| Conflict as a controlled uncertainty signal | `scripts/build_v3_conflict_confound_control.py` | `results/v3_conflict_confound_control_all_viable_min100_full.csv`, `results/v3_conflict_confound_control_all_viable_min100_full_report.md` |
 | Conflict-stratified conformal calibration | `scripts/build_v3_conflict_conformal.py` | `results/v3_conflict_conformal_all_viable_min100_full.csv`, `results/v3_conflict_conformal_all_viable_min100_full_report.md` |
+| Operational comparison of concatenation, fixed fusion, reliability fusion, and conflict-stratified calibration | `scripts/build_v3_operational_policy_comparison.py` | `results/v3_operational_policy_comparison_all_viable_min100_full.csv`, `results/v3_operational_policy_comparison_all_viable_min100_full_report.md` |
 | Cross-regime distance generalization | `scripts/build_v3_distance_generalization.py` | `results/v3_distance_generalization_all_viable_min100_full.csv`, `results/v3_distance_generalization_all_viable_min100_full_report.md`, `figures/fig_v3_distance_generalization.png` |
 | Regional-set sensitivity | `scripts/build_v2_region_sensitivity.py` | `results/v2_region_sensitivity_all_viable_min100_full.csv`, `results/v2_region_sensitivity_all_viable_min100_full_report.md` |
 

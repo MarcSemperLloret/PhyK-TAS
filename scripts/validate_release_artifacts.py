@@ -32,6 +32,8 @@ REQUIRED_FILES = [
     "results/v3_complementarity_all_viable_min100_full.csv",
     "results/v3_conflict_all_viable_min100_full.csv",
     "results/v3_conflict_conformal_all_viable_min100_full.csv",
+    "results/v3_conflict_confound_control_all_viable_min100_full.csv",
+    "results/v3_operational_policy_comparison_all_viable_min100_full.csv",
     "results/v3_distance_generalization_all_viable_min100_full.csv",
     "figures/fig_all_viable_kbs_r2_by_model.png",
     "figures/fig_all_viable_degradation_heatmaps.png",
@@ -51,6 +53,8 @@ REQUIRED_FILES = [
     "scripts/build_v2_region_sensitivity.py",
     "scripts/build_v3_fusion.py",
     "scripts/build_v3_conflict_conformal.py",
+    "scripts/build_v3_conflict_confound_control.py",
+    "scripts/build_v3_operational_policy_comparison.py",
     "scripts/build_v3_distance_generalization.py",
 ]
 
