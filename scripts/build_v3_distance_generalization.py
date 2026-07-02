@@ -37,10 +37,31 @@ from build_v2_meta_models import (
 )
 
 FIG = PAPER / "figures"
+FIG_DIRS = [
+    PAPER / "figures",
+    PAPER / "manuscript_latex" / "figures",
+    PAPER / "manuscript_latex_eswa" / "figures",
+    PAPER / "manuscript_latex_infofusion" / "figures",
+]
+for figdir in FIG_DIRS:
+    figdir.mkdir(parents=True, exist_ok=True)
 ALPHA = float(os.environ.get("PHYKTAS_ALPHA", "0.10"))
 MODELS = ["spatial_knn_ridge", "stgcn_diffusion", "graphwavenet_transfer",
           "regional_doy_climatology"]
 FEATURES = PHYSICAL_COLS + SHIFT_COLS
+
+MODEL_LABELS = {
+    "spatial_knn_ridge": "Spatial kNN-ridge",
+    "stgcn_diffusion": "STGCN diffusion",
+    "graphwavenet_transfer": "Graph WaveNet",
+    "regional_doy_climatology": "Regional climatology",
+}
+MODEL_COLORS = {
+    "spatial_knn_ridge": "#3B6EA8",
+    "stgcn_diffusion": "#2CA25F",
+    "graphwavenet_transfer": "#7B5EA7",
+    "regional_doy_climatology": "#C95714",
+}
 
 OUT = PAPER / f"v3_distance_generalization_{TAG}.csv"
 REPORT = PAPER / f"v3_distance_generalization_{TAG}_report.md"
@@ -76,6 +97,23 @@ def region_geo_distance(df):
 
 
 def main() -> None:
+    plt.rcParams.update({
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+        "font.size": 9,
+        "axes.labelsize": 10,
+        "axes.titlesize": 10,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "legend.fontsize": 8,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "axes.facecolor": "#FBFBFB",
+        "figure.facecolor": "white",
+        "savefig.dpi": 400,
+        "savefig.bbox": "tight",
+        "savefig.pad_inches": 0.04,
+    })
     df = pd.concat([load_seed(s) for s in SEEDS], ignore_index=True)
     phys_dist = region_phys_distance(df)
     geo_dist = region_geo_distance(df)
@@ -144,22 +182,37 @@ def main() -> None:
     REPORT.write_text("\n".join(lines), encoding="utf-8")
 
     # figure: LTRO error vs regime distance
-    fig, ax = plt.subplots(1, 2, figsize=(11, 4.2))
+    fig, ax = plt.subplots(1, 2, figsize=(7.4, 3.25), sharex=True)
     for model in MODELS:
         d = res[res.model == model]
-        ax[0].scatter(d["phys_distance"], d["ltro_mae"], label=model, s=36)
-        ax[1].scatter(d["phys_distance"], d["conformal_coverage"], label=model, s=36)
-    ax[0].set_xlabel("physical distance to nearest training regime")
-    ax[0].set_ylabel("LTRO degradation-prediction MAE")
-    ax[0].set_title("Error grows with distance to the calibrated library")
-    ax[1].axhline(1 - ALPHA, ls="--", c="k", lw=1, label=f"target {1-ALPHA:.2f}")
-    ax[1].set_xlabel("physical distance to nearest training regime")
-    ax[1].set_ylabel("conformal coverage on held-out region")
-    ax[1].set_title("Regime-conditional conformal coverage")
-    ax[1].legend(fontsize=7)
-    fig.tight_layout()
-    fig.savefig(FIG / "fig_v3_distance_generalization.png", dpi=150)
-    fig.savefig(FIG / "fig_v3_distance_generalization.pdf")
+        ax[0].scatter(
+            d["phys_distance"], d["ltro_mae"], label=MODEL_LABELS[model],
+            s=42, color=MODEL_COLORS[model], alpha=0.84, edgecolor="white", linewidth=0.45,
+        )
+        ax[1].scatter(
+            d["phys_distance"], d["conformal_coverage"], label=MODEL_LABELS[model],
+            s=42, color=MODEL_COLORS[model], alpha=0.84, edgecolor="white", linewidth=0.45,
+        )
+    ax[0].set_xlabel("Distance to nearest training regime")
+    ax[0].set_ylabel("LTRO prediction MAE")
+    ax[0].set_title("Prediction error")
+    ax[1].axhline(1 - ALPHA, ls="--", c="#333333", lw=1.0, label=f"Target {1-ALPHA:.2f}")
+    ax[1].set_xlabel("Distance to nearest training regime")
+    ax[1].set_ylabel("Held-out coverage")
+    ax[1].set_title("Conformal coverage")
+    ax[1].set_ylim(0, 1.04)
+    for label, axis in zip(["A", "B"], ax):
+        axis.text(-0.12, 1.05, label, transform=axis.transAxes, fontsize=10, fontweight="bold", va="bottom")
+        axis.grid(color="#E8E8E8", linewidth=0.55)
+        axis.set_axisbelow(True)
+        axis.spines["left"].set_color("#666666")
+        axis.spines["bottom"].set_color("#666666")
+    handles, labels = ax[1].get_legend_handles_labels()
+    fig.legend(handles, labels, frameon=False, ncols=3, loc="upper center", bbox_to_anchor=(0.5, 1.08))
+    fig.tight_layout(rect=(0, 0, 1, 0.95), w_pad=1.2)
+    for figdir in FIG_DIRS:
+        fig.savefig(figdir / "fig_v3_distance_generalization.png")
+        fig.savefig(figdir / "fig_v3_distance_generalization.pdf")
 
     print(res.round(3).to_string(index=False))
     print("\n".join(lines[:12]))

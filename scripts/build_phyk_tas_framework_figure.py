@@ -7,176 +7,84 @@ from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MANUSCRIPT = ROOT / "Paper1" / "manuscript_latex"
-FIGDIR = MANUSCRIPT / "figures"
-FIGDIR.mkdir(parents=True, exist_ok=True)
+FIGDIRS = [
+    ROOT / "Paper1" / "figures",
+    ROOT / "Paper1" / "manuscript_latex" / "figures",
+    ROOT / "Paper1" / "manuscript_latex_eswa" / "figures",
+    ROOT / "Paper1" / "manuscript_latex_infofusion" / "figures",
+]
+for figdir in FIGDIRS:
+    figdir.mkdir(parents=True, exist_ok=True)
 
 
-def box(ax, xy, wh, text, fc, ec="#2F3437", fontsize=9.5, weight="normal"):
-    x, y = xy
-    w, h = wh
-    patch = FancyBboxPatch(
-        (x, y),
-        w,
-        h,
-        boxstyle="round,pad=0.018,rounding_size=0.018",
-        linewidth=1.1,
-        edgecolor=ec,
-        facecolor=fc,
-    )
-    ax.add_patch(patch)
-    ax.text(
-        x + w / 2,
-        y + h / 2,
-        text,
-        ha="center",
-        va="center",
-        fontsize=fontsize,
-        weight=weight,
-        color="#172026",
-        linespacing=1.18,
-    )
-    return patch
+def box(ax, x, y, w, h, header, body, fc, ec="#2F3437"):
+    ax.add_patch(FancyBboxPatch(
+        (x, y), w, h,
+        boxstyle="round,pad=0.006,rounding_size=0.018",
+        linewidth=1.15, edgecolor=ec, facecolor=fc, mutation_aspect=0.5,
+    ))
+    ax.plot([x + 0.018, x + w - 0.018], [y + h - 0.18, y + h - 0.18], color=ec, lw=0.55, alpha=0.35)
+    ax.text(x + w / 2, y + h - 0.072, header, ha="center", va="top",
+            fontsize=10.8, weight="bold", color="#111820", linespacing=1.05)
+    ax.text(x + w / 2, y + h * 0.40, body, ha="center", va="center",
+            fontsize=8.15, color="#2c333a", linespacing=1.24)
 
 
-def arrow(ax, start, end, color="#4A4F55", lw=1.3, rad=0.0):
-    arr = FancyArrowPatch(
-        start,
-        end,
-        arrowstyle="-|>",
-        mutation_scale=12,
-        linewidth=lw,
-        color=color,
-        connectionstyle=f"arc3,rad={rad}",
-    )
-    ax.add_patch(arr)
+def arrow(ax, start, end, color="#4A4F55", lw=1.8, rad=0.0):
+    ax.add_patch(FancyArrowPatch(
+        start, end, arrowstyle="-|>", mutation_scale=16,
+        linewidth=lw, color=color, connectionstyle=f"arc3,rad={rad}",
+    ))
 
 
 def main() -> None:
-    fig, ax = plt.subplots(figsize=(13.2, 7.2), dpi=180)
+    plt.rcParams.update({
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+    })
+    fig, ax = plt.subplots(figsize=(8.8, 3.05), dpi=400)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    colors = {
-        "data": "#D8EAF7",
-        "curation": "#E7E2F3",
-        "physical": "#DCEEDC",
-        "shift": "#FCE6C8",
-        "models": "#F8D7DA",
-        "inference": "#D7E7F5",
-        "decision": "#E8E8E8",
-        "output": "#DDF3F0",
-    }
-
-    box(
-        ax,
-        (0.035, 0.58),
-        (0.18, 0.22),
-        "Station archives\nGHCN-D, ECA\\&D\nnational networks",
-        colors["data"],
-        weight="bold",
-    )
-    box(
-        ax,
-        (0.275, 0.58),
-        (0.22, 0.22),
-        "Benchmark curation\nAR6 regions\ncross-source dedup\ncoverage masks\ntime splits",
-        colors["curation"],
-        weight="bold",
-    )
-
-    box(
-        ax,
-        (0.56, 0.72),
-        (0.22, 0.18),
-        "Physical knowledge layer\noccurrence, intensity\nseasonality, intermittency\nextremes",
-        colors["physical"],
-        weight="bold",
-    )
-    box(
-        ax,
-        (0.56, 0.48),
-        (0.22, 0.18),
-        "Generic shift layer\nKL, Wasserstein, MMD\nmoment and percentile shifts\ngeographic controls",
-        colors["shift"],
-        weight="bold",
-    )
-    box(
-        ax,
-        (0.56, 0.24),
-        (0.22, 0.18),
-        "Model evaluation layer\nSTGCN diffusion\nGraph WaveNet transfer\nout-minus-in degradation",
-        colors["models"],
-        weight="bold",
-    )
-
-    box(
-        ax,
-        (0.82, 0.50),
-        (0.15, 0.22),
-        "Degradation\ninference\nblocked CV\nseed uncertainty\nrisk score",
-        colors["inference"],
-        weight="bold",
-    )
-    box(
-        ax,
-        (0.82, 0.18),
-        (0.15, 0.20),
-        "Decision layer\nDEPLOY\nADAPT\nRETRAIN",
-        colors["decision"],
-        weight="bold",
-    )
-
-    box(
-        ax,
-        (0.305, 0.12),
-        (0.16, 0.16),
-        "Knowledge base\npreregistered descriptors\nfixed feature groups\nno post-hoc selection",
-        colors["output"],
-        fontsize=8.8,
-        weight="bold",
-    )
-
-    arrow(ax, (0.215, 0.69), (0.275, 0.69))
-    arrow(ax, (0.495, 0.69), (0.56, 0.81))
-    arrow(ax, (0.495, 0.69), (0.56, 0.57))
-    arrow(ax, (0.495, 0.63), (0.56, 0.33))
-    arrow(ax, (0.78, 0.81), (0.82, 0.64))
-    arrow(ax, (0.78, 0.57), (0.82, 0.61))
-    arrow(ax, (0.78, 0.33), (0.82, 0.54))
-    arrow(ax, (0.895, 0.50), (0.895, 0.38))
-    arrow(ax, (0.385, 0.58), (0.385, 0.28), rad=0.0)
-    arrow(ax, (0.465, 0.20), (0.56, 0.78), color="#2F6F48", rad=-0.15)
-    arrow(ax, (0.465, 0.20), (0.56, 0.54), color="#2F6F48", rad=-0.05)
+    c = ["#E7F1FA", "#ECE8F6", "#DFF2E6", "#E3EEF8", "#E2F4F0"]
+    stages = [
+        ("Station\narchives", "GHCN-D, ECA&D,\nnational networks"),
+        ("Benchmark\ncuration", "AR6 regions,\ndeduplication,\ntime splits"),
+        ("Fused\nevidence", "physical regime\ndescriptors +\nshift diagnostics"),
+        ("Degradation\ninference", "fusion of models:\nstacking, pooling,\nmonotone priors"),
+        ("Conformal\ndecision", "deploy / adapt /\nretrain with\ncalibrated risk"),
+    ]
 
     ax.text(
-        0.035,
-        0.925,
-        "PhyK-TAS: physically informed knowledge-based transferability assessment",
-        fontsize=15,
-        weight="bold",
-        color="#172026",
+        0.5, 0.92,
+        "PhyK-TAS transfer-risk assessment pipeline",
+        ha="center", va="center", fontsize=12.2, weight="bold", color="#111820",
     )
     ax.text(
-        0.035,
-        0.885,
-        "The system estimates model degradation before deployment and converts it into uncertainty-aware operational decisions.",
-        fontsize=10.5,
-        color="#3A4148",
+        0.5, 0.845,
+        "from station archives to calibrated deploy/adapt/retrain decisions",
+        ha="center", va="center", fontsize=8.8, color="#46515A",
     )
+
+    w, h, y, gap = 0.168, 0.55, 0.20, 0.021
+    xs = [0.015 + i * (w + gap) for i in range(5)]
+    for x, col, (header, body) in zip(xs, c, stages):
+        ec = "#1B6B46" if "Fused" in header else "#27323A"
+        lw_col = "#1B6B46" if "Fused" in header else ec
+        box(ax, x, y, w, h, header, body, col, ec=lw_col)
+    for i in range(4):
+        arrow(ax, (xs[i] + w + 0.003, y + h / 2), (xs[i + 1] - 0.003, y + h / 2), color="#5B6268", lw=1.55)
 
     ax.text(
-        0.835,
-        0.105,
-        "Output: transfer-risk table\nand interpretable decision rationale",
-        fontsize=9,
-        color="#3A4148",
-        ha="center",
+        xs[2] + w / 2, 0.095,
+        "feature-level fusion + model-level fusion + uncertainty calibration",
+        ha="center", va="center", fontsize=8.2, color="#1B6B46", weight="bold",
     )
 
-    for ext in ["png", "pdf"]:
-        fig.savefig(FIGDIR / f"fig_phyk_tas_framework.{ext}", bbox_inches="tight")
+    for figdir in FIGDIRS:
+        for ext in ["png", "pdf"]:
+            fig.savefig(figdir / f"fig_phyk_tas_framework.{ext}", bbox_inches="tight", pad_inches=0.03)
     plt.close(fig)
 
 

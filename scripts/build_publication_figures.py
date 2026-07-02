@@ -14,6 +14,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 PAPER = ROOT / "Paper1"
 FIG_DIRS = [PAPER / "figures", PAPER / "manuscript_latex" / "figures"]
+FIG_DIRS += [
+    PAPER / "manuscript_latex_eswa" / "figures",
+    PAPER / "manuscript_latex_infofusion" / "figures",
+]
 for fig_dir in FIG_DIRS:
     fig_dir.mkdir(exist_ok=True)
 
@@ -54,14 +58,14 @@ FEATURE_LABELS = {
 }
 
 FEATURE_COLORS = {
-    "physical_knowledge": "#0072B2",
+    "physical_knowledge": "#3B6EA8",
     "generic_shift": "#E69F00",
-    "physical_plus_shift": "#009E73",
+    "physical_plus_shift": "#2CA25F",
 }
 
 DECISION_ORDER = ["deploy", "adapt", "retrain"]
 DECISION_LABELS = {"deploy": "Deploy", "adapt": "Adapt", "retrain": "Retrain"}
-DECISION_COLORS = {"deploy": "#009E73", "adapt": "#F0E442", "retrain": "#D55E00"}
+DECISION_COLORS = {"deploy": "#159A74", "adapt": "#F2C94C", "retrain": "#C95714"}
 
 REGION_NAMES = {
     "WCE": "Western & Central Europe",
@@ -97,7 +101,7 @@ def configure_style() -> None:
         {
             "font.family": "sans-serif",
             "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
-            "font.size": 8.5,
+            "font.size": 9,
             "axes.labelsize": 10,
             "axes.titlesize": 10,
             "xtick.labelsize": 8,
@@ -107,9 +111,11 @@ def configure_style() -> None:
             "axes.spines.top": False,
             "axes.spines.right": False,
             "axes.linewidth": 0.8,
+            "axes.facecolor": "#FBFBFB",
+            "figure.facecolor": "white",
             "xtick.major.width": 0.7,
             "ytick.major.width": 0.7,
-            "savefig.dpi": 300,
+            "savefig.dpi": 400,
             "savefig.bbox": "tight",
             "savefig.pad_inches": 0.04,
         }
@@ -134,6 +140,14 @@ def add_panel_label(ax: plt.Axes, label: str) -> None:
         va="bottom",
         ha="right",
     )
+
+
+def clean_axis(ax: plt.Axes, grid_axis: str | None = "y") -> None:
+    if grid_axis:
+        ax.grid(axis=grid_axis, color="#E8E8E8", linewidth=0.55)
+    ax.set_axisbelow(True)
+    ax.spines["left"].set_color("#666666")
+    ax.spines["bottom"].set_color("#666666")
 
 
 def figure_graphical_abstract() -> None:
@@ -312,7 +326,7 @@ def figure_kbs_r2() -> None:
     models = [m for m in MODEL_ORDER if m in set(focus["forecast_model"])]
     xbase = np.arange(len(models))
     width = 0.24
-    fig, ax = plt.subplots(figsize=(7.2, 3.6))
+    fig, ax = plt.subplots(figsize=(7.45, 3.65))
 
     for i, feature in enumerate(FEATURE_ORDER):
         sub = focus[focus["feature_set"] == feature].set_index("forecast_model").reindex(models)
@@ -323,19 +337,19 @@ def figure_kbs_r2() -> None:
             width=width,
             yerr=sub["r2_sd"].fillna(0),
             capsize=2.5,
-            linewidth=0.4,
+            linewidth=0.6,
             edgecolor="white",
             label=FEATURE_LABELS[feature],
             color=FEATURE_COLORS[feature],
         )
 
-    ax.axhline(0, color="0.25", linewidth=0.8)
+    ax.axhspan(-0.28, 0, facecolor="#F4F4F4", zorder=0)
+    ax.axhline(0, color="#333333", linewidth=0.85)
     ax.set_xticks(xbase, labels=[MODEL_LABELS[m] for m in models])
     ax.set_ylabel(r"$R^2$ for degradation prediction")
     ax.set_ylim(-0.28, 1.04)
     ax.legend(frameon=False, ncols=3, loc="upper center", bbox_to_anchor=(0.5, 1.17))
-    ax.grid(axis="y", color="0.9", linewidth=0.6)
-    ax.set_axisbelow(True)
+    clean_axis(ax)
     save_figure(fig, "fig_all_viable_kbs_r2_by_model")
 
 
@@ -352,7 +366,7 @@ def figure_decisions() -> None:
         if decision not in counts:
             counts[decision] = 0
 
-    fig, ax = plt.subplots(figsize=(7.0, 3.6))
+    fig, ax = plt.subplots(figsize=(7.25, 3.55))
     y = np.arange(len(counts))
     left = np.zeros(len(counts))
     for decision in DECISION_ORDER:
@@ -368,7 +382,8 @@ def figure_decisions() -> None:
         )
         for yi, val, start in zip(y, vals, left):
             if val >= 8:
-                ax.text(start + val / 2, yi, f"{int(val)}", ha="center", va="center", fontsize=7)
+                color = "white" if decision == "retrain" else "#202020"
+                ax.text(start + val / 2, yi, f"{int(val)}", ha="center", va="center", fontsize=7.4, color=color)
         left += vals
 
     ax.set_yticks(y, labels=[MODEL_LABELS[m].replace("\n", " ") for m in counts.index])
@@ -376,8 +391,7 @@ def figure_decisions() -> None:
     ax.set_xlabel("Out-of-region source-target pairs")
     ax.set_xlim(0, 110)
     ax.legend(frameon=False, ncols=3, loc="upper center", bbox_to_anchor=(0.5, 1.15))
-    ax.grid(axis="x", color="0.9", linewidth=0.6)
-    ax.set_axisbelow(True)
+    clean_axis(ax, "x")
     save_figure(fig, "fig_all_viable_decision_counts")
 
 
@@ -397,14 +411,15 @@ def figure_degradation_heatmaps() -> None:
     vmax = max(float(np.nanpercentile(np.abs(mat), 95)) for mat in mats.values())
     vmax = max(0.1, vmax)
 
-    fig, axes = plt.subplots(3, 1, figsize=(5.9, 8.4), constrained_layout=True)
+    fig, axes = plt.subplots(3, 1, figsize=(6.15, 8.15), constrained_layout=True)
     im = None
     for idx, (ax, model) in enumerate(zip(axes, models)):
-        im = ax.imshow(mats[model], cmap="RdBu_r", vmin=-vmax, vmax=vmax)
-        ax.set_title(MODEL_LABELS[model].replace("\n", " "))
+        im = ax.imshow(mats[model], cmap="RdBu_r", vmin=-vmax, vmax=vmax, interpolation="nearest")
+        ax.set_title(MODEL_LABELS[model].replace("\n", " "), fontweight="bold", pad=5)
         ax.set_xticks(np.arange(len(regions)), labels=regions, rotation=45, ha="right")
         ax.set_yticks(np.arange(len(regions)), labels=regions)
-        ax.tick_params(length=0, labelsize=8.4)
+        ax.tick_params(length=0, labelsize=8.6)
+        ax.set_facecolor("white")
         add_panel_label(ax, ascii_uppercase[idx])
         for spine in ax.spines.values():
             spine.set_visible(True)
@@ -415,12 +430,12 @@ def figure_degradation_heatmaps() -> None:
     axes[-1].set_xlabel("Target region")
     if im is not None:
         cbar = fig.colorbar(im, ax=axes, fraction=0.045, pad=0.035)
-        cbar.set_label("MAE out-minus-in")
+        cbar.set_label("MAE degradation")
     save_figure(fig, "fig_all_viable_degradation_heatmaps")
 
     for model, mat in mats.items():
         fig_single, ax = plt.subplots(figsize=(5.4, 4.8))
-        im_single = ax.imshow(mat, cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+        im_single = ax.imshow(mat, cmap="RdBu_r", vmin=-vmax, vmax=vmax, interpolation="nearest")
         ax.set_xticks(np.arange(len(regions)), labels=regions, rotation=45, ha="right")
         ax.set_yticks(np.arange(len(regions)), labels=regions)
         ax.tick_params(labelsize=9)
@@ -428,7 +443,7 @@ def figure_degradation_heatmaps() -> None:
         ax.set_ylabel("Source region")
         ax.set_title(MODEL_LABELS[model].replace("\n", " "))
         cbar = fig_single.colorbar(im_single, ax=ax, fraction=0.046, pad=0.04)
-        cbar.set_label("MAE out-minus-in")
+        cbar.set_label("MAE degradation")
         save_figure(fig_single, f"fig_all_viable_degradation_heatmap_{model}")
 
 
@@ -455,18 +470,23 @@ def figure_source_accuracy() -> None:
         ax.scatter(
             sub["source_in_region_mae"],
             sub["mae_out_minus_in_mean"],
-            s=11,
-            alpha=0.42,
-            color="#0072B2",
+            s=13,
+            alpha=0.45,
+            color="#2B8CBE",
             edgecolors="none",
         )
+        ok = sub[["source_in_region_mae", "mae_out_minus_in_mean"]].replace([np.inf, -np.inf], np.nan).dropna()
+        if len(ok) > 3:
+            coef = np.polyfit(ok["source_in_region_mae"], ok["mae_out_minus_in_mean"], 1)
+            xs = np.linspace(ok["source_in_region_mae"].min(), ok["source_in_region_mae"].max(), 60)
+            ax.plot(xs, coef[0] * xs + coef[1], color="#333333", linewidth=0.9, alpha=0.75)
         r = sub["source_in_region_mae"].corr(sub["mae_out_minus_in_mean"], method="pearson")
-        ax.axhline(0, color="0.3", linewidth=0.7)
+        ax.axhline(0, color="#666666", linewidth=0.75)
         ax.text(0.03, 0.93, f"r = {r:.2f}", transform=ax.transAxes, ha="left", va="top", fontsize=8)
         ax.set_title(MODEL_LABELS[model].replace("\n", " "))
         add_panel_label(ax, ascii_uppercase[idx])
-        ax.grid(color="0.92", linewidth=0.5)
-        ax.set_axisbelow(True)
+        clean_axis(ax, None)
+        ax.grid(color="#EDEDED", linewidth=0.5)
 
     for ax in axes[3:]:
         ax.set_xlabel("Source in-region MAE")
@@ -502,13 +522,12 @@ def figure_threshold_sensitivity() -> None:
         bottom = np.zeros(len(profile_order))
         for decision in DECISION_ORDER:
             vals = sub[decision].to_numpy()
-            ax.bar(x, vals, bottom=bottom, color=DECISION_COLORS[decision], edgecolor="white", linewidth=0.4)
+            ax.bar(x, vals, bottom=bottom, color=DECISION_COLORS[decision], edgecolor="white", linewidth=0.45)
             bottom += vals
         ax.set_title(MODEL_LABELS[model].replace("\n", " "))
         ax.set_xticks(x, labels=["Strict", "Main", "Lenient"], rotation=25, ha="right")
         add_panel_label(ax, ascii_uppercase[idx])
-        ax.grid(axis="y", color="0.92", linewidth=0.5)
-        ax.set_axisbelow(True)
+        clean_axis(ax)
     for ax in [axes[0], axes[3]]:
         ax.set_ylabel("Pairs")
     handles = [mpl.patches.Patch(color=DECISION_COLORS[d], label=DECISION_LABELS[d]) for d in DECISION_ORDER]
