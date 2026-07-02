@@ -35,7 +35,12 @@ This file maps paper-facing claims, tables, and figures to repository artifacts.
 | Physical descriptor group ablation | `scripts/run_physical_group_ablation.py` | `results/physical_group_ablation_results_all.csv`, `results/physical_group_ablation_summary.csv`, `figures/fig_physical_group_ablation.png` |
 | Negative controls for physical descriptors | `scripts/build_v2_negative_controls.py` | `results/v2_negative_controls_all_viable_min100_full.csv`, `results/v2_negative_controls_all_viable_min100_full_report.md` |
 | Negative-control gain over shift-only baseline | `scripts/build_v2_negative_control_delta.py` | `results/v2_negative_control_delta_all_viable_min100_full.csv`, `results/v2_negative_control_delta_all_viable_min100_full_report.md` |
+| Equal-dimension random-feature control | `scripts/build_v2_random_dim_control.py` | `results/v2_random_dim_control_all_viable_min100_full.csv`, `results/v2_random_dim_control_all_viable_min100_full_report.md` |
 | Compact multi-level fusion ablation | `scripts/build_v2_fusion_ablation_summary.py` | `results/v2_fusion_ablation_summary_all_viable_min100_full.csv`, `results/v2_fusion_ablation_summary_all_viable_min100_full_report.md` |
+| Full v3 inference-model fusion table | `scripts/build_v3_fusion.py` | `results/v3_fusion_scores_all_viable_min100_full.csv`, `results/v3_fusion_all_viable_min100_full_report.md` |
+| Reliability-aware source complementarity and conflict | `scripts/build_v3_fusion.py` | `results/v3_complementarity_all_viable_min100_full.csv`, `results/v3_conflict_all_viable_min100_full.csv` |
+| Conflict-stratified conformal calibration | `scripts/build_v3_conflict_conformal.py` | `results/v3_conflict_conformal_all_viable_min100_full.csv`, `results/v3_conflict_conformal_all_viable_min100_full_report.md` |
+| Cross-regime distance generalization | `scripts/build_v3_distance_generalization.py` | `results/v3_distance_generalization_all_viable_min100_full.csv`, `results/v3_distance_generalization_all_viable_min100_full_report.md`, `figures/fig_v3_distance_generalization.png` |
 | Regional-set sensitivity | `scripts/build_v2_region_sensitivity.py` | `results/v2_region_sensitivity_all_viable_min100_full.csv`, `results/v2_region_sensitivity_all_viable_min100_full_report.md` |
 
 ## Decision And Robustness Checks
