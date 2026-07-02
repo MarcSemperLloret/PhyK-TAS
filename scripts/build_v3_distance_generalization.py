@@ -100,12 +100,12 @@ def main() -> None:
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
-        "font.size": 9,
-        "axes.labelsize": 10,
-        "axes.titlesize": 10,
-        "xtick.labelsize": 8,
-        "ytick.labelsize": 8,
-        "legend.fontsize": 8,
+        "font.size": 10,
+        "axes.labelsize": 11,
+        "axes.titlesize": 11,
+        "xtick.labelsize": 9.2,
+        "ytick.labelsize": 9.2,
+        "legend.fontsize": 9,
         "axes.spines.top": False,
         "axes.spines.right": False,
         "axes.facecolor": "#FBFBFB",
@@ -182,16 +182,16 @@ def main() -> None:
     REPORT.write_text("\n".join(lines), encoding="utf-8")
 
     # figure: LTRO error vs regime distance
-    fig, ax = plt.subplots(1, 2, figsize=(7.4, 3.25), sharex=True)
+    fig, ax = plt.subplots(1, 2, figsize=(7.45, 3.45), sharex=True)
     for model in MODELS:
         d = res[res.model == model]
         ax[0].scatter(
             d["phys_distance"], d["ltro_mae"], label=MODEL_LABELS[model],
-            s=42, color=MODEL_COLORS[model], alpha=0.84, edgecolor="white", linewidth=0.45,
+            s=50, color=MODEL_COLORS[model], alpha=0.86, edgecolor="white", linewidth=0.55,
         )
         ax[1].scatter(
             d["phys_distance"], d["conformal_coverage"], label=MODEL_LABELS[model],
-            s=42, color=MODEL_COLORS[model], alpha=0.84, edgecolor="white", linewidth=0.45,
+            s=50, color=MODEL_COLORS[model], alpha=0.86, edgecolor="white", linewidth=0.55,
         )
     ax[0].set_xlabel("Distance to nearest training regime")
     ax[0].set_ylabel("LTRO prediction MAE")
@@ -202,7 +202,7 @@ def main() -> None:
     ax[1].set_title("Conformal coverage")
     ax[1].set_ylim(0, 1.04)
     for label, axis in zip(["A", "B"], ax):
-        axis.text(-0.12, 1.05, label, transform=axis.transAxes, fontsize=10, fontweight="bold", va="bottom")
+        axis.text(-0.12, 1.05, label, transform=axis.transAxes, fontsize=11, fontweight="bold", va="bottom")
         axis.grid(color="#E8E8E8", linewidth=0.55)
         axis.set_axisbelow(True)
         axis.spines["left"].set_color("#666666")
