@@ -23,11 +23,11 @@ def box(ax, x, y, w, h, header, body, fc, ec="#2F3437"):
         boxstyle="round,pad=0.006,rounding_size=0.018",
         linewidth=1.15, edgecolor=ec, facecolor=fc, mutation_aspect=0.5,
     ))
-    ax.plot([x + 0.016, x + w - 0.016], [y + h - 0.175, y + h - 0.175], color=ec, lw=0.55, alpha=0.35)
-    ax.text(x + w / 2, y + h - 0.066, header, ha="center", va="top",
-            fontsize=11.4, weight="bold", color="#111820", linespacing=1.02)
-    ax.text(x + w / 2, y + h * 0.395, body, ha="center", va="center",
-            fontsize=8.75, color="#2c333a", linespacing=1.18)
+    ax.plot([x + 0.018, x + w - 0.018], [y + h - 0.122, y + h - 0.122], color=ec, lw=0.6, alpha=0.35)
+    ax.text(x + w / 2, y + h - 0.040, header, ha="center", va="top",
+            fontsize=10.4, weight="bold", color="#111820", linespacing=0.98)
+    ax.text(x + w / 2, y + h * 0.315, body, ha="center", va="center",
+            fontsize=8.45, color="#2c333a", linespacing=1.08)
 
 
 def arrow(ax, start, end, color="#4A4F55", lw=1.8, rad=0.0):
@@ -42,7 +42,7 @@ def main() -> None:
         "font.family": "sans-serif",
         "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
     })
-    fig, ax = plt.subplots(figsize=(8.8, 3.18), dpi=400)
+    fig, ax = plt.subplots(figsize=(7.4, 4.25), dpi=400)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
@@ -57,29 +57,44 @@ def main() -> None:
     ]
 
     ax.text(
-        0.5, 0.925,
+        0.5, 0.94,
         "PhyK-TAS transfer-risk assessment pipeline",
-        ha="center", va="center", fontsize=12.6, weight="bold", color="#111820",
+        ha="center", va="center", fontsize=12.8, weight="bold", color="#111820",
     )
     ax.text(
-        0.5, 0.852,
+        0.5, 0.885,
         "from station archives to calibrated deploy/adapt/retrain decisions",
-        ha="center", va="center", fontsize=9.2, color="#46515A",
+        ha="center", va="center", fontsize=9.4, color="#46515A",
     )
 
-    w, h, y, gap = 0.158, 0.57, 0.19, 0.034
-    xs = [0.015 + i * (w + gap) for i in range(5)]
-    for x, col, (header, body) in zip(xs, c, stages):
+    w, h = 0.245, 0.300
+    top_y, bottom_y = 0.525, 0.135
+    left_x, mid_x, right_x = 0.075, 0.3775, 0.680
+
+    positions = [
+        (right_x, top_y),    # Station archives: start at top right
+        (mid_x, top_y),      # Benchmark curation: flow right-to-left
+        (left_x, top_y),     # Fused evidence
+        (left_x, bottom_y),  # Degradation inference: down from fusion
+        (right_x, bottom_y), # Conformal decision: finish left-to-right
+    ]
+
+    for (x, y), col, (header, body) in zip(positions, c, stages):
         ec = "#1B6B46" if "Fused" in header else "#27323A"
         lw_col = "#1B6B46" if "Fused" in header else ec
         box(ax, x, y, w, h, header, body, col, ec=lw_col)
-    for i in range(4):
-        arrow(ax, (xs[i] + w + 0.010, y + h / 2), (xs[i + 1] - 0.014, y + h / 2), color="#5B6268", lw=1.55)
+
+    cy_top = top_y + h / 2
+    cy_bottom = bottom_y + h / 2
+    arrow(ax, (right_x - 0.020, cy_top), (mid_x + w + 0.020, cy_top), color="#5B6268", lw=1.65)
+    arrow(ax, (mid_x - 0.020, cy_top), (left_x + w + 0.020, cy_top), color="#5B6268", lw=1.65)
+    arrow(ax, (left_x + w / 2, top_y - 0.025), (left_x + w / 2, bottom_y + h + 0.025), color="#5B6268", lw=1.65)
+    arrow(ax, (left_x + w + 0.025, cy_bottom), (right_x - 0.025, cy_bottom), color="#5B6268", lw=1.65)
 
     ax.text(
-        xs[2] + w / 2, 0.085,
+        0.5, 0.075,
         "feature-level fusion + model-level fusion + uncertainty calibration",
-        ha="center", va="center", fontsize=8.8, color="#1B6B46", weight="bold",
+        ha="center", va="center", fontsize=9.0, color="#1B6B46", weight="bold",
     )
 
     for figdir in FIGDIRS:
