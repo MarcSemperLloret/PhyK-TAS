@@ -1,8 +1,20 @@
 # PhyK-TAS
 
-PhyK-TAS is an experimental decision-support pipeline for assessing transferability risk in spatiotemporal precipitation forecasters. It fuses physical precipitation-regime descriptors, generic distribution-shift diagnostics, and complementary degradation-inference models to estimate whether a source-trained forecaster should be deployed, adapted, or retrained in a target climate regime.
+PhyK-TAS is a research line on model-reuse decisions for spatiotemporal precipitation forecasters: given a forecaster trained on one station network, should it be deployed unchanged, adapted, or retrained on a target network, and under a shared maintenance budget, which transfers should receive the expensive action first?
 
-This repository contains the experiment code and derived result artifacts. It intentionally does not contain the LaTeX manuscript.
+This repository contains the experiment code and derived result artifacts. It intentionally does not contain the LaTeX manuscripts.
+
+## Executed-action benchmark (current study)
+
+The current study, *"From Shift Scores to Executed Actions: A Budgeted Earth-Science Benchmark for Cross-Regional Reuse of Precipitation Forecasters"*, executes deploy, adapt and retrain for all 330 source-target-model transfers across 11 IPCC AR6 land regions, in a 2020-2022 development block and again in a frozen 2023-2025 confirmation block (990 realized action outcomes per period).
+
+Everything needed to reproduce its reported numbers is in **[`reproducibility_esi/`](reproducibility_esi/)**: the realized action tables, the frozen policy predictions, the budget curves and target-level AUCs, the capacity-equivalence bootstrap, the post-hoc modern-learner panel, the coefficient audit of the frozen policy, the written protocols frozen before confirmation, a claim-to-artifact traceability matrix, and a SHA-256 manifest. Start with [`reproducibility_esi/README.md`](reproducibility_esi/README.md); the primary confirmatory result regenerates with a single script and without rerunning any neural forecaster.
+
+Measured on that benchmark, retraining every candidate rather than none changes pooled error by 1.00%, so the opportunity available to any allocation rule is bounded and known. The frozen action-value policy recovers 43.5% of it; the best generic distribution-shift ranking recovers 10.0%, and source-to-target KL divergence performs worse than random allocation.
+
+## Earlier analyses in this repository
+
+The directories below also retain the earlier transfer-degradation and evidence-layer analyses of the same station library: regime-versus-shift feature audits, permutation and equal-dimension noise controls, label-free agreement estimators, and conformal decision calibration. The executed-action benchmark supersedes their decision layer and does not depend on their fusion components.
 
 For reviewer-facing reproduction details, see `REPRODUCIBILITY.md`. For a direct mapping from paper-facing claims and figures to scripts and files, see `TRACEABILITY.md`.
 

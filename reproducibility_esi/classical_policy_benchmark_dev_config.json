@@ -1,0 +1,12 @@
+{
+  "outer_validation": "LeaveOneGroupOut(target_region)",
+  "inner_validation": "GroupKFold over all remaining target regions",
+  "scoring": "negative mean absolute error",
+  "features": 62,
+  "rows": 330,
+  "learners": [
+    "extratrees",
+    "lightgbm"
+  ],
+  "grids": "Defined in scripts/evaluate_softbudget_external5.py:tuned_predictions"
+}
