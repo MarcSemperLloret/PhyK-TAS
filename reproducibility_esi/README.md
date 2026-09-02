@@ -1,7 +1,6 @@
 # Executed-action benchmark — reproducibility package
 
-This archive accompanies the manuscript *"From Shift Scores to Executed Actions:
-A Budgeted Earth-Science Benchmark for Cross-Regional Reuse of Precipitation
+This archive accompanies the manuscript *"A Budgeted Earth-Science Benchmark for Cross-Regional Reuse of Precipitation
 Forecasters"* submitted to *Earth Science Informatics*. It contains no local filesystem paths
 and runs as shipped.
 

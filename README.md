@@ -6,7 +6,7 @@ This repository contains the experiment code and derived result artifacts. It in
 
 ## Executed-action benchmark (current study)
 
-The current study, *"From Shift Scores to Executed Actions: A Budgeted Earth-Science Benchmark for Cross-Regional Reuse of Precipitation Forecasters"*, executes deploy, adapt and retrain for all 330 source-target-model transfers across 11 IPCC AR6 land regions, in a 2020-2022 development block and again in a frozen 2023-2025 confirmation block (990 realized action outcomes per period).
+The current study, *"A Budgeted Earth-Science Benchmark for Cross-Regional Reuse of Precipitation Forecasters"*, executes deploy, adapt and retrain for all 330 source-target-model transfers across 11 IPCC AR6 land regions, in a 2020-2022 development block and again in a frozen 2023-2025 confirmation block (990 realized action outcomes per period).
 
 Everything needed to reproduce its reported numbers is in **[`reproducibility_esi/`](reproducibility_esi/)**: the realized action tables, the frozen policy predictions, the budget curves and target-level AUCs, the capacity-equivalence bootstrap, the post-hoc modern-learner panel, the coefficient audit of the frozen policy, the written protocols frozen before confirmation, a claim-to-artifact traceability matrix, and a SHA-256 manifest. Start with [`reproducibility_esi/README.md`](reproducibility_esi/README.md); the primary confirmatory result regenerates with a single script and without rerunning any neural forecaster.
 
