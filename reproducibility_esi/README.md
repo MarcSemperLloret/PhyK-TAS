@@ -98,6 +98,25 @@ hardware and library versions; `deep_policy_benchmark_config.json` records the
 environment used. This panel is a post-hoc model-selection analysis, not a
 second independent confirmation, and it cannot alter the frozen Ridge result.
 
+## Regenerating the post-confirmation negative controls
+
+```
+python scripts/audit_actionvalue_negative_controls.py
+```
+
+Reports the structural audit of the action matrix (retraining is executed once
+per target and family, so the realized retraining benefit is a strictly
+decreasing function of the cheap-action loss within each of the 33 groups), the
+trivial ranker that exploits that identity and nothing else, and a 200-refit
+permutation null in which the held-target policy is refitted on shuffled action
+outcomes. The ridge penalty is fixed at its modal frozen value so the real policy
+and the null are scored identically. Writes
+`actionvalue_negative_controls.csv` and `actionvalue_negative_controls.md`.
+
+These controls were specified and run after the frozen confirmation was
+complete. They cannot alter a confirmatory number; they test whether the
+confirmed gain could have been produced without information.
+
 ## Verifying integrity
 
 ```

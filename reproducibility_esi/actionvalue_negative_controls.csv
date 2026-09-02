@@ -1,0 +1,8 @@
+control,gain_vs_random,share_of_ceiling_pct,favorable_targets
+frozen action-value policy,0.0034520360365926095,43.4740830215353,10.0
+restricted oracle,0.007940445885615599,100.0,11.0
+trivial ranker (realized cheap-action loss),-0.0005272628178789596,-6.640216751985112,4.0
+"policy refit, alpha fixed at 10000",0.004166992226525057,52.478063405402864,10.0
+"permutation null, mean over 200 refits",6.561601692212538e-05,0.826351792674403,
+"permutation null, 95th percentile",0.002473564652556903,31.151457842409755,
+"permutation null, maximum",0.00353285192066366,44.49185815954677,
